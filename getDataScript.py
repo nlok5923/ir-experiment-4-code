@@ -2,30 +2,21 @@ import sys
 import requests
 import json
 
-# query = sys.argv[1]
-# print('First param:'+sys.argv[1]+'#')
+# init weights 
+weight_title = sys.argv[2]
+weight_date = sys.argv[3]
 
-# query = {      
-#     "query": {
-#         "match": {
-#             "title":"what are the laws which are concerned about the dynamic viscous nature of fluid in heated substance"
-#          }
-#      }
-# }
-a = sys.argv[2]
-b = sys.argv[3]
-
+# preparing query data sys.argv[1] contains the query text
 query = {
     "query": {
         "multi_match": {
             "query": sys.argv[1],
-            "fields": ["title" + "^" + a, "data" + "^" + b]
+            "fields": ["title" + "^" + weight_title, "data" + "^" + weight_date]
          }
      }
 }
 
-
-
+# our index name is cran-data which we had formed on importing cran field dataset  
 def search(query):
     url = 'http://localhost:9200/cran-data/_search'
     httpResp = requests.get(url, data=json.dumps(query), headers={"content-type":"application/json"})
