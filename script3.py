@@ -30,8 +30,7 @@ def search(query):
     url = 'http://localhost:9200/cran-data/_search'
     httpResp = requests.get(url, data=json.dumps(query), headers={"content-type":"application/json"})
     searchHits = json.loads(httpResp.text)["hits"]
-    #  print ("Sno: \tRelevance Score\t\t ID\t Title")
-    #  print(searchHits)
+    print(sys.argv[4])
     
     for idx, hit in enumerate(searchHits['hits']):
         print("%s" %(hit['_source']['id']))
